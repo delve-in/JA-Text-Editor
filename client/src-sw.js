@@ -27,15 +27,14 @@ warmStrategyCache({
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 registerRoute(
-({request}) => ['style', 'script','worker'].includes(request.destinantion),
+  ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
 
 new StaleWhileRevalidate({
-  cacheName: 'jate-cache'
+  cacheName: 'jate-cache',
   plugins: [
-    new ExpirationPlugin({
-      maxEntries: 50,
-      maxAgeSeconds: 30 * 24 * 60 * 60,
-    })
+    new CacheableResponsePlugin({
+      statuses: [0, 200],
+    }),
   ],
 })
 );
